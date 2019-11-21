@@ -1,15 +1,5 @@
-javascript:(function() {
-    const teamId = window.slackDebug.activeTeamId;
-    const redux = window.slackDebug[teamId].redux;
-    const experiments = redux.getState().experiments;
-    const filteredExperiments = {};
-    for (const key in experiments) {
-        if (!key.includes('wysiwyg')) {
-            filteredExperiments[key] = experiments[key];
-        }
-    }
-    redux.dispatch({
-        type: '[19] Bulk add experiment assignments to redux',
-        payload: filteredExperiments
-    });
+javascript:(_ => {
+  const redux = slackDebug[slackDebug.activeTeamId].redux;
+  const {wysiwyg_composer, wysiwyg_composer_ios, wysiwyg_composer_webapp, ...payload} = redux.getState().experiments;
+  redux.dispatch({ type: '[19] Bulk add experiment assignments to redux', payload });
 })();
