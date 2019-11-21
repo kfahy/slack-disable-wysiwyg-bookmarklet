@@ -17,6 +17,14 @@ WYSIWYG A/B tests, which should restore the old editor functionality.
 
 ### In the browser
 
+#### As a browser extension
+
+Install [pocc/no-wysiwyg](https://github.com/pocc/no-wysiwyg) for Chrome
+(pending review) or
+[Firefox](https://addons.mozilla.org/en-US/firefox/addon/disable-slack-wysiwyg/).
+
+#### As a bookmarklet
+
 1. Copy the contents of `index.js`
 2. Paste into the URL field of a browser bookmark
 3. Navigate to a Slack workspace in that browser
