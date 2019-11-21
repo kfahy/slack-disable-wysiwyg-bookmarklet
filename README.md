@@ -26,7 +26,7 @@ WYSIWYG A/B tests, which should restore the old editor functionality.
 ### In the desktop app
 
 1. Open the slack app in Developer mode
-  * On Mac: `export SLACK_DEVELOPER_MENU=true && open -a /Applications/Slack.app`
+    * On Mac: `export SLACK_DEVELOPER_MENU=true && open -a /Applications/Slack.app`
 2. Right-click in the app and _Inspect element_
 3. Copy the contents of `index.js`
 4. Paste into the Console
