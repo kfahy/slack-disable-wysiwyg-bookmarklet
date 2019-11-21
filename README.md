@@ -32,3 +32,19 @@ WYSIWYG A/B tests, which should restore the old editor functionality.
 3. Copy the contents of `index.js`
 4. Paste into the Console tab
 5. Repeat each time you reload slack or switch to a team for the first time
+
+### In Franz
+
+[Franz](https://github.com/meetfranz/franz) is an Electron-based messaging aggregator application.
+
+1. With Slack opened inside Franz, use the keyboard shortcut to open up the inspector:
+   - Mac: <kbd>⌘ command</kbd> + <kbd>⌥ option</kbd> + <kbd>I</kbd>
+   - Windows/Linux: <kbd>⌃ ctrl</kbd> + <kbd>⇧ shift</kbd> + <kbd>I</kbd>
+
+2. Open up the console tab, and run the following to open up the current Slack instance's dev console:
+
+   ```js
+   $(".app__service .is-active webview").openDevTools()
+   ```
+
+3. In the newly opened console window, paste in the script from `index.js` without the `javascript:` prefix.
