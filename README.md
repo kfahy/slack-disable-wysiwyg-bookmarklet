@@ -31,7 +31,8 @@ For bugs, feedback, and source, visit the extension repo
 ### Browser bookmarklet
 
 1. Copy the contents of `index.js`
-2. Paste into the URL field of a browser bookmark
+2. Paste into the URL field of a browser bookmark, and prepend the text with
+   `javascript:`
 3. Navigate to a Slack workspace in that browser
 4. Execute the bookmarklet to disable the WYSIWYG editor
 5. Repeat each time you reload slack
@@ -62,4 +63,4 @@ For bugs, feedback, and source, visit the extension repo
    $(".app__service .is-active webview").openDevTools()
    ```
 
-3. In the newly opened console window, paste in the script from `index.js` without the `javascript:` prefix.
+3. In the newly opened console window, paste in the script from `index.js`.
