@@ -1,0 +1,112 @@
+#!/usr/bin/env bash
+
+set -e
+
+OS_NAME=$(uname)
+
+if [ "$OS_NAME" != "Darwin" ]; then
+  echo "This script currently only works with MacOS."
+  echo "If you're on Linux and want to fix this, please open a PR at:"
+  echo "  https://github.com/kfahy/slack-disable-wysiwyg-bookmarklet"
+  exit 1
+fi
+
+SLACK_RESOURCES_DIR=/Applications/Slack.app/Contents/Resources
+
+function command_exists() {
+  command -v $1 > /dev/null
+  return $?
+}
+
+if [ ! -d "$SLACK_RESOURCES_DIR" ]; then
+  echo "Couldn't find Slack resources dir ($SLACK_RESOURCES_DIR)"
+  echo "Is it installed?"
+  exit 1
+else
+  echo "✅ Found dir $SLACK_RESOURCES_DIR"
+fi
+
+if ! command_exists npx; then
+  echo "Could not find `npx`, please install"
+else
+  echo "✅ npx found"
+fi
+
+NPX_PATH=$(type -P npx)
+
+# unpack
+echo "🚀 unpacking asar archive for Slack (requires sudo)"
+sudo "PATH=$PATH" $NPX_PATH asar extract $SLACK_RESOURCES_DIR/app.asar $SLACK_RESOURCES_DIR/app.asar.unpacked
+echo "✅ done"
+
+JS_FILE="$SLACK_RESOURCES_DIR/app.asar.unpacked/dist/ssb-interop.bundle.js"
+HEADER="// WYSIWYG patch"
+
+if grep -q "$HEADER" "$JS_FILE" >/dev/null; then
+  echo "🎉 Patch is already installed, exiting early"
+  exit 0
+fi
+
+echo "🚀 Patching $JS_FILE with code..."
+echo " ==> requires sudo to patch this file"
+echo " ==> please audit this script if you have concerns"
+
+cat << EOF | sudo tee -a "$JS_FILE" > /dev/null
+
+$HEADER
+(() => {
+  const disableWysiwygEditor = redux => {
+    const {
+      wysiwyg_composer,
+      wysiwyg_composer_ios,
+      wysiwyg_composer_webapp,
+      ...payload
+    } = redux.getState().experiments;
+
+    redux.dispatch(
+      {
+        type: '[19] Bulk add experiment assignments to redux',
+        payload
+      }
+    );
+  };
+
+  let currentTeamId = null;
+  const seenTeams = {};
+
+  setInterval(() => {
+    if (!window.slackDebug) return;
+
+    const { activeTeamId } = window.slackDebug;
+    const newId = activeTeamId && activeTeamId !== currentTeamId
+
+    if (newId && slackDebug[activeTeamId] && slackDebug[activeTeamId].redux) {
+      currentTeamId = activeTeamId;
+      const needsPatching = !seenTeams[activeTeamId];
+
+      if (needsPatching) {
+        seenTeams[activeTeamId] = true;
+
+        const checkInterval = setInterval(() => {
+          const team = slackDebug[activeTeamId];
+          const wysiwygLoaded = Boolean(
+            document.querySelector('[data-qa="texty_composer_button"]')
+          );
+
+          if (team.redux && wysiwygLoaded) {
+            disableWysiwygEditor(team.redux);
+            clearInterval(checkInterval);
+          }
+        });
+      }
+    }
+  }, 50);
+})();
+// END patch
+EOF
+
+echo "✅ done"
+
+echo "🚀 Repackaging asar for Slack..."
+sudo "PATH=$PATH" $NPX_PATH asar pack $SLACK_RESOURCES_DIR/app.asar.unpacked $SLACK_RESOURCES_DIR/app.asar
+echo "🎉 all done!"
