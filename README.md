@@ -9,9 +9,12 @@ On 2019-11-20 Slack rolled out a new version of the editor. This editor features
 message formatting inline in the text box.
 
 As of this time, Slack does not allow users to disable this functionality and
-revert back to the plaintext markdown editor. Until Slack implements this
-functionality, you can use this bookmarklet to temporarily disable all
-WYSIWYG A/B tests, which should restore the old editor functionality.
+revert back to the plaintext markdown editor. However, Slack has
+[publicly](https://twitter.com/SlackHQ/status/1197640136172937218)
+[stated](https://twitter.com/SlackHQ/status/1197653998142197760) that such a
+feature is in the works. But in the meantime, you can use these browser
+extensions, bookmarklets, or scripts to temporarily disable all WYSIWYG A/B
+tests for your platform, which should restore the old editor functionality.
 
 ## Usage
 
