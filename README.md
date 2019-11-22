@@ -39,6 +39,13 @@ For bugs, feedback, and source, visit the extension repo
 
 ### In the desktop app
 
+#### Option A: Patch Mac desktop app
+
+Download and run
+[`bin/patch-desktop-app`](https://github.com/kfahy/slack-disable-wysiwyg-bookmarklet/blob/master/bin/patch-desktop-app), courtesy of [@dbalatero](https://github.com/dbalatero).
+
+#### Option B: Manually execute script for Mac or other platforms
+
 1. Open the slack app in Developer mode
     * On Mac: `export SLACK_DEVELOPER_MENU=true && open -a /Applications/Slack.app`
     * On PC in a Powershell window (per user install): `$env:SLACK_DEVELOPER_MENU="true"; & "$($env:LOCALAPPDATA)\Slack\slack.exe"`
