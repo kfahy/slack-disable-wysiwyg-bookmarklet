@@ -4,14 +4,18 @@ set -e
 
 OS_NAME=$(uname)
 
-if [ "$OS_NAME" != "Darwin" ]; then
-  echo "This script currently only works with MacOS."
-  echo "If you're on Linux and want to fix this, please open a PR at:"
-  echo "  https://github.com/kfahy/slack-disable-wysiwyg-bookmarklet"
-  exit 1
-fi
+SLACK_RESOURCES_DIR=$1
 
-SLACK_RESOURCES_DIR=/Applications/Slack.app/Contents/Resources
+if [ -z "$SLACK_RESOURCES_DIR" ]; then
+  if [ "$OS_NAME" == "Darwin" ]; then
+    SLACK_RESOURCES_DIR=/Applications/Slack.app/Contents/Resources
+    echo "No resources directory supplied, using default: $SLACK_RESOURCES_DIR"
+  else
+    echo "Please supply the Slack resources directory as the first argument"
+    echo "e.g. bin/patch-desktop-app /usr/lib/slack/resources"
+    exit 1
+  fi
+fi
 
 function command_exists() {
   command -v $1 > /dev/null
@@ -36,7 +40,7 @@ NPX_PATH=$(type -P npx)
 
 # unpack
 echo "🚀 unpacking asar archive for Slack (requires sudo)"
-sudo "PATH=$PATH" $NPX_PATH asar extract $SLACK_RESOURCES_DIR/app.asar $SLACK_RESOURCES_DIR/app.asar.unpacked
+sudo env "PATH=$PATH" $NPX_PATH asar extract $SLACK_RESOURCES_DIR/app.asar $SLACK_RESOURCES_DIR/app.asar.unpacked
 echo "✅ done"
 
 JS_FILE="$SLACK_RESOURCES_DIR/app.asar.unpacked/dist/ssb-interop.bundle.js"
@@ -108,5 +112,5 @@ EOF
 echo "✅ done"
 
 echo "🚀 Repackaging asar for Slack..."
-sudo "PATH=$PATH" $NPX_PATH asar pack $SLACK_RESOURCES_DIR/app.asar.unpacked $SLACK_RESOURCES_DIR/app.asar
+sudo env "PATH=$PATH" $NPX_PATH asar pack $SLACK_RESOURCES_DIR/app.asar.unpacked $SLACK_RESOURCES_DIR/app.asar
 echo "🎉 all done!"
