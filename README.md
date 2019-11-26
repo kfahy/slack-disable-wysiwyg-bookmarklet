@@ -43,6 +43,7 @@ For bugs, feedback, and source, visit the extension repo
 
 Download and run
 [`bin/patch-desktop-app`](https://github.com/kfahy/slack-disable-wysiwyg-bookmarklet/blob/master/bin/patch-desktop-app), courtesy of [@dbalatero](https://github.com/dbalatero).
+* Ensure `SLACK_DEVELOPER_MENU=true` is either exported in `~/.profile` or set in the application launcher
 
 #### Option B: Manually execute script
 
