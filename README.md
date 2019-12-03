@@ -4,8 +4,12 @@
 
 ## Update
 
-**As of 2019-12-02 Slack supports reverting back to its previous editor!**
-Instead of using this repo, please enable this feature via Slack's preferences:
+**As of 2019-12-02 Slack
+[supports reverting back](https://twitter.com/SlackHQ/status/1201955273667158023)
+to its previous editor!**
+Instead of using this repo, please
+[enable this feature](https://slack.com/help/articles/202288908) via Slack's
+preferences:
 1. Click your workspace name in the top left
 2. Choose **Preferences**
 3. Select the **Advanced** tab
