@@ -2,14 +2,33 @@
 
 *Disables the WYSIWYG editor in Slack.*
 
+## Update
+
+**As of 2019-12-02 Slack supports reverting back to its previous editor!**
+Instead of using this repo, please enable this feature via Slack's preferences:
+1. Click your workspace name in the top left
+2. Choose **Preferences**
+3. Select the **Advanced** tab
+4. Check the box next to **Format messages with markup**
+
+![Screenshot](slack-pref.png)
+
+Many thanks to everybody who submitted PRs, discussed issues, and used the tools
+in this repository. I'd like to think that our efforts played a role in helping
+Slack recognize the demand for the previous editor. Props to Slack also for
+ultimately making the right decision in letting us choose which editor to use.
+
+The contents of this repository and the remainder of this README are left intact
+for reference, but should not be used going forward.
+
 ## Motivation
 
 On 2019-11-20 Slack rolled out a new version of the editor. This editor features
 [WYSIWYG](https://en.wikipedia.org/wiki/WYSIWYG) functionality, which shows all
 message formatting inline in the text box.
 
-As of this time, Slack does not allow users to disable this functionality and
-revert back to the plaintext markdown editor. However, Slack has
+~As of this time, Slack does not allow users to disable this functionality and
+revert back to the plaintext markdown editor.~ However, Slack has
 [publicly](https://twitter.com/SlackHQ/status/1197640136172937218)
 [stated](https://twitter.com/SlackHQ/status/1197653998142197760) that such a
 feature is in the works. But in the meantime, you can use these browser
