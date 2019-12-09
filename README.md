@@ -8,7 +8,7 @@
 [supports reverting back](https://twitter.com/SlackHQ/status/1201955273667158023)
 to its previous editor!**
 Instead of using this repo, please
-[enable this feature](https://slack.com/help/articles/202288908) via Slack's
+[enable this feature](https://slack.com/help/articles/360039953113) via Slack's
 preferences:
 1. Click your workspace name in the top left
 2. Choose **Preferences**
